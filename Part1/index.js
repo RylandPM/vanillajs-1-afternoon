@@ -1,19 +1,29 @@
 console.log("Hello");
 
 let progressArr = [];
+let winner = false;
 
 function play(boxId) {
   const clickedElement = document.getElementById(boxId);
   const playerSpan = document.getElementById("player");
-
-  if (playerSpan.innerText === "X") {
-    playerSpan.innerText = "O";
-    clickedElement.innerText = "X";
-    progressArr[boxId] = "X";
+  if (winner === true) {
+    alert("Winner already declared, please reset game.");
+    return;
+  } else if (
+    clickedElement.innerText === "X" ||
+    clickedElement.innerText === "O"
+  ) {
+    alert("Choose an unchosen square please.");
   } else {
-    playerSpan.innerText = "X";
-    clickedElement.innerText = "O";
-    progressArr[boxId] = "O";
+    if (playerSpan.innerText === "X") {
+      playerSpan.innerText = "O";
+      clickedElement.innerText = "X";
+      progressArr[boxId] = "X";
+    } else {
+      playerSpan.innerText = "X";
+      clickedElement.innerText = "O";
+      progressArr[boxId] = "O";
+    }
   }
   const topLeft = progressArr[0];
   const topCenter = progressArr[1];
@@ -30,6 +40,7 @@ function play(boxId) {
     topLeft === topCenter &&
     topCenter === topRight
   ) {
+    winner = true;
     window.alert(`${topLeft} Wins!`);
     return;
   } else if (
@@ -37,6 +48,7 @@ function play(boxId) {
     midLeft === midCenter &&
     midCenter === midRight
   ) {
+    winner = true;
     window.alert(`${midLeft} Wins!`);
     return;
   } else if (
@@ -44,6 +56,7 @@ function play(boxId) {
     botLeft === botCenter &&
     botCenter === botRight
   ) {
+    winner = true;
     window.alert(`${botLeft} Wins!`);
     return;
   } else if (
@@ -51,6 +64,7 @@ function play(boxId) {
     topLeft === midLeft &&
     midLeft === botLeft
   ) {
+    winner = true;
     window.alert(`${topLeft} Wins!`);
     return;
   } else if (
@@ -58,6 +72,7 @@ function play(boxId) {
     topCenter === midCenter &&
     midCenter === botCenter
   ) {
+    winner = true;
     window.alert(`${topCenter} Wins!`);
     return;
   } else if (
@@ -65,6 +80,7 @@ function play(boxId) {
     topRight === midRight &&
     midRight === botRight
   ) {
+    winner = true;
     window.alert(`${topRight} Wins!`);
     return;
   } else if (
@@ -72,6 +88,7 @@ function play(boxId) {
     topLeft === midCenter &&
     midCenter === botRight
   ) {
+    winner = true;
     window.alert(`${topLeft} Wins!`);
     return;
   } else if (
@@ -79,6 +96,7 @@ function play(boxId) {
     topRight === midCenter &&
     midCenter === botLeft
   ) {
+    winner = true;
     window.alert(`${topRight} Wins!`);
     return;
   }
@@ -94,4 +112,13 @@ function play(boxId) {
   console.log(progressArr);
 }
 
-function boardReset() {}
+function boardReset() {
+  progressArr = [];
+  const playerReset = document.getElementById("player");
+  playerReset.innerText = "X";
+  for (i = 0; i <= 8; i++) {
+    let wipe = document.getElementById(i);
+    wipe.innerText = "";
+    winner = false;
+  }
+}
